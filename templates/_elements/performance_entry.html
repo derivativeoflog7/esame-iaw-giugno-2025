@@ -1,0 +1,43 @@
+{# Il div è necessario per mettere i pulsanti di modifica al di fuori del link#}
+{# È impostato con position: relative in modo che i pulsanti con position: absolute si allineino in base ad esso e non rispetto al documento#}
+<div class="position-relative">
+    {% if not performance.is_published %}
+        <div class="performance-list-action-buttons">
+            <button type="button" class="btn btn-primary btn-sm mb-1" data-bs-toggle="modal"
+                    data-bs-target="#performance-{{ performance.id }}-edit-modal">
+                <i class="bi bi-pencil-fill"></i>
+            </button>
+            <br>
+            {# Genera tasto per pubblicare se la performance non si sovrappone, altrimenti tasto per mostrare la sovrapposizione#}
+            {% if performance.is_overlapping %}
+                <button type="button" class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal"
+                        data-bs-target="#performance-{{ performance.id }}-overlap-modal">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-success btn-sm mb-1" data-bs-toggle="modal"
+                        data-bs-target="#performance-{{ performance.id }}-publish-modal">
+                    <i class="bi bi-upload"></i>
+                </button>
+            {% endif %}
+            <br>
+            <button type="button" class="btn btn-danger btn-sm mb-1" data-bs-toggle="modal"
+                    data-bs-target="#performance-{{ performance.id }}-delete-modal">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+        </div>
+    {% endif %}
+    <a href="{{ url_for("performance_page", performance_id=performance.id) }}" class="a-revert">
+        <article class="mb-3 performance-entry {% if performance.is_overlapping %}dark-red-background{% endif %}">
+            <img src="{{ url_for("static", filename="uploads/" + performance.artist.main_picture.filename) }}" class="performance-entry-img"
+                 alt="">
+            <div class="ms-3">
+                <h1>{{ performance.artist.name }}</h1>
+                <p class="h5">{{ day_names[performance.day] }} {{ performance.time_string }}<br>
+                {{ performance.duration }} minut{{ "o" if performance.duration == 1 else "i" }}<br>
+                {{ performance.stage.name }}<br>
+                {{ performance.genre }}</p>
+            </div>
+        </article>
+    </a>
+</div>

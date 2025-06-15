@@ -1,0 +1,182 @@
+{% extends '_elements/manager_elements/_base_section.html' %}
+
+{% block thead_content %}
+    <th class="hide-below-md">Giorno</th>
+    <th class="hide-below-md">Ora</th>
+    <th class="hide-below-md">Durata</th>
+    <th class="d-md-none">Orario</th>
+    <th>Palco</th>
+    <th>Artista</th>
+    <th>Genere</th>
+    <th>Descrizione</th>
+    <th><span class="hide-below-md">Immagini</span><span class="d-md-none">Img</span></th>
+    <th>Azioni</th>
+{% endblock %}
+{% block rows %}
+    {# Genera righe tabella #}
+    {% if drafts %}
+        {% for perf in drafts.values() %}
+            <tr {% if perf.is_overlapping %}class="dark-red-background"{% endif %}>
+                <!-- ID {{ perf.id }} -->
+                <td class="hide-below-md">{{ day_names[perf.day] }}</td>
+                <td class="hide-below-md">{{ perf.time_string }}</td>
+                <td class="hide-below-md">{{ perf.duration }} min</td>
+                <td class="d-md-none">{{ day_names[perf.day] }}<br>{{ perf.time_string }}<br>{{ perf.duration }}min</td>
+                <td>{{ perf.stage.name }}</td>
+                <td>{{ perf.artist.name }}</td>
+                <td>{{ perf.genre }}</td>
+                <td>{{ perf.description | replace('\n', '<br>' | safe) }}</td>
+                <td>{{ perf.artist.pictures_count }}</td>
+                <td class="performance-manager-actions-cell min-width-nowrap">
+                    <a href="{{ url_for("performance_page", performance_id=perf.id) }}" class="btn btn-info btn-sm">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#performance-{{ perf.id }}-edit-modal">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <br class="d-md-none">
+{# Genera tasto per pubblicare se la performance non si sovrappone, altrimenti tasto per mostrare la sovrapposizione#}
+                    {% if perf.is_overlapping %}
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#performance-{{ perf.id }}-overlap-modal">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#performance-{{ perf.id }}-publish-modal">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                    {% endif %}
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#performance-{{ perf.id }}-delete-modal">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <td class="hide-below-md" colspan="9">Nessun dato</td>
+        <td class="d-md-none" colspan="7">Nessun dato</td>
+    {% endif %}
+{% endblock %}
+{% block list_content %}
+    {% if drafts %}
+        {% for performance in drafts.values() %}
+            {% include "_elements/performance_entry.html" %}
+        {% endfor %}
+    {% else %}
+        <p class="h3 text-center">Nessuna bozza</p>
+    {% endif %}
+{% endblock %}
+{% block forms %}
+    {# Genera modal di conferma #}
+    {% for perf in drafts.values() %}
+        <!-- Modal per l'eliminazione (ID {{ perf.id }}) -->
+        <div class="modal fade" tabindex="-1" id="performance-{{ perf.id }}-delete-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Conferma eliminazione</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p>Confermi l'eliminazione dell'evento?<br>Questo causerà anche l'eliminazione dell'artista e delle immagini associate.<br>L'operazione non può essere annullata.</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                  <form action="{{ url_for("do_delete_performance") }}" method="POST">
+                      <input type="hidden" name="performance-id" value="{{ perf.id }}">
+                      <button type="submit" class="btn btn-danger">Conferma</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {# Non generare il form per performance che si sovrappongono ad altre già pubblicate#}
+        {% if not perf.is_overlapping %}
+            <!-- Modal per la pubblicazione (ID {{ perf.id }}) -->
+            <div class="modal fade" tabindex="-1" id="performance-{{ perf.id }}-publish-modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Conferma pubblicazione</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Confermi la pubblicazione dell'evento?<br>Non sarà più possibile modificare la performance, l'artista o le immagini.<br>L'operazione non può essere annullata.</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                      <form action="{{ url_for("do_publish_performance") }}" method="POST">
+                          <input type="hidden" name="performance-id" value="{{ perf.id }}">
+                          <button type="submit" class="btn btn-success">Conferma</button>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% else %}
+{# Genera invece quello che mostra le sovrapposizioni    #}
+            <!-- Modal per la sovrapposizione (ID {{ perf.id }}) -->
+            <div class="modal fade" tabindex="-1" id="performance-{{ perf.id }}-overlap-modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Sovrapposizione</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>La performance si sovrappone con le seguenti già pubblicate:</p>
+                      <ul>
+                          {% for ov_perf in perf.overlaps.values() %}
+                            <li>{{ ov_perf.artist.name }} - {{ day_names[ov_perf.day] }} {{ ov_perf.time_string }}, {{ ov_perf.duration }}min</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% endif %}
+        <!-- Modal per la modifica (ID {{ perf.id }}) -->
+        <div class="modal fade" tabindex="-1" id="performance-{{ perf.id }}-edit-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modifica performance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+              </div>
+              <div class="modal-body text-center">
+                  <a href="{{ url_for("edit_pictures_page", performance_id=perf.id) }}" class="btn btn-primary mb-1 width-16em">Aggiungi o elimina immagini</a>
+                  <br>
+                  <a href="{{ url_for("edit_performance_page", performance_id=perf.id) }}" class="btn btn-primary width-16em">Modifica dati</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block nav_content %}
+    <a href="{{ url_for("add_performance_page") }}" class="btn-primary btn">
+        <i class="bi bi-plus-lg"></i>
+        Aggiungi<span class="hide-below-sm"> performance</span>
+    </a>
+    <ul class="nav nav-pills ms-auto" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="drafts-table-tab"
+                    data-bs-toggle="tab" data-bs-target="#drafts-table-tab-pane"
+                    type="button" role="tab">
+                Tabella
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="drafts-list-tab" data-bs-toggle="tab"
+                    data-bs-target="#drafts-list-tab-pane"
+                    type="button" role="tab">
+                Lista
+            </button>
+        </li>
+    </ul>
+{% endblock %}
+{% block table_section_id %}drafts-table-tab-pane{% endblock %}
+{% block list_section_id %}drafts-list-tab-pane{% endblock %}

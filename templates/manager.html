@@ -1,0 +1,31 @@
+{% extends '_template_pages/base.html' %}
+
+{% block title %}Gestione performance{% endblock %}
+{% block content %}
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="drafts-tab"
+                    data-bs-toggle="tab" data-bs-target="#drafts-tab-pane"
+                    type="button" role="tab">
+                Le mie bozze
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="published-tab" data-bs-toggle="tab"
+                    data-bs-target="#published-tab-pane"
+                    type="button" role="tab">
+                Pubblicati
+            </button>
+        </li>
+    </ul>
+    <section class="tab-content mt-2">
+        <div class="tab-pane fade show active" id="drafts-tab-pane"
+             role="tabpanel" tabindex="0">
+            {% include '_elements/manager_elements/drafts.html' %}
+        </div>
+        <div class="tab-pane fade" id="published-tab-pane" role="tabpanel"
+             tabindex="0">
+            {% include '_elements/manager_elements/published.html' %}
+        </div>
+    </section>
+{% endblock %}

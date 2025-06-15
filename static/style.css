@@ -1,0 +1,371 @@
+/*:root{
+    !*Variabili*!
+    --bs-nav-link-color: #fec86e !important;
+}
+
+.nav-pills, .btn {
+    --bs-nav-pills-link-active-bg: #b6410d;
+    --bs-border-radius: 3em;
+}
+
+.btn-primary {
+    --bs-btn-bg: #cf4d14;
+    --bs-btn-border-color: #cf4d14;
+    --bs-btn-hover-bg: #bc430f;
+    --bs-btn-hover-border-color: #bc430f;
+    --bs-btn-active-bg: #a83808;
+    --bs-btn-active-border-color: #a83808;
+}
+
+.nav-tabs {
+    --bs-nav-link-color: #cf4d14;
+    --bs-nav-tabs-link-active-color: #ff9900;
+}*/
+
+.nav-pills, .btn, .form-select, .form-control {
+    --bs-border-radius: 1.3em;
+}
+
+main {
+    margin: 0 1em; /*Margine ai lati*/
+}
+
+h5 {
+    margin-bottom: 0 !important;
+}
+
+.height-100 {
+    height: 100%;
+}
+
+.height-10em {
+    height: 10em;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+}
+
+.flex {
+    display: flex;
+}
+
+.no-display {
+    display: none !important;
+}
+
+.max-width-40em-center {
+    max-width: 40em;
+    margin: auto;
+}
+
+.max-width-50em-center {
+    max-width: 50em;
+    margin: auto;
+}
+
+.dark-red-background {
+    background-color: darkred !important;
+}
+
+/*È necessario sovrascrivere il colore dello sfondo anche dei td dentro una tr*/
+.dark-red-background > td {
+    background-color: darkred !important;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.outlined {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; color: white;
+}
+
+.performance-list-action-buttons {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+
+.ticket {
+    height: 20em;
+    width: 15em;
+    border: 0;
+    overflow: hidden; /*Nascondi cerchi al di fuori del biglietto*/
+}
+
+.ticket > .card-footer {
+    text-align: center;
+    height: 3.5em;
+    border-top: 2px dashed var(--bs-body-bg);
+}
+
+.ticket > .card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 3.5em;
+    border-bottom: 2px dashed var(--bs-body-bg);
+}
+
+.ticket-border {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: var(--bs-body-bg);
+}
+
+.ticket-border.top {
+    top: -17px;
+}
+
+.ticket-border.bottom {
+    bottom: -17px;
+}
+
+.ticket-border.left {
+    left: -17px;
+}
+
+.ticket-border.right {
+    right: -17px;
+}
+
+.ticket-single {
+    background-color: #015501;
+}
+
+.ticket-double {
+    background-color: #335283;
+}
+
+.ticket-triple {
+    background-color: #512c06;
+}
+
+.ticket-discount {
+    color: gray;
+}
+
+.half-height-row, .half-height-row td {
+    height: 1.5em !important;
+}
+
+.ticket > .card-footer > button {
+    width: 80%;
+}
+
+.manager-table {
+    font-size: 0.9em;
+}
+
+.popup-message {
+    /*Per centrare il testo e la X*/
+    display: flex;
+    flex-direction: row;
+    gap: 0.6em;
+    align-items: center;
+}
+
+.carousel img, .carousel-item {
+    max-height: 300px;
+    object-fit: scale-down;
+}
+
+.performance-entry {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid orangered;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.performance-entry > img {
+    max-width: 150px !important;
+    width: 30%;
+    min-width: 120px;
+    height: auto !important;
+    object-fit: cover;
+}
+
+.performance-entry > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.a-revert {
+    color: inherit;
+    text-decoration: none;
+}
+
+.width-16em {
+    width: 100%;
+    max-width: 16em;
+}
+
+.width-11em {
+    width: 100%;
+    max-width: 11em;
+}
+
+.blur-backdrop {
+    backdrop-filter: blur(10px);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.centered-page-bg {
+    /*Mischia immagine con nero semitrasparente per scurire l'immagine*/
+    background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.7),
+          rgba(0, 0, 0, 0.7)
+        ),
+        url(/static/img/login_background.jpg);
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+}
+
+.hide-below-md, .hide-below-sm {
+    display: none !important;
+}
+
+.performance-manager-actions-cell {
+    /*Trucco per rendere la colonna più stretta possibile*/
+    width: 1px;
+    white-space: nowrap;
+}
+
+.performance-manager-actions-cell > button,
+.performance-manager-actions-cell > a {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/*var() non sembra funzionare nelle media queries :(*/
+@media (min-width: 768px) {
+    .hide-below-md {
+        display: revert !important;
+    }
+
+    .performance-manager-actions-cell > button,
+    .performance-manager-actions-cell > a {
+        margin-top: unset;
+        margin-bottom: unset;
+    }
+}
+
+@media (min-width: 576px) {
+    .hide-below-sm {
+        display: revert !important;
+    }
+}
+
+#form-page-form {
+    margin-bottom: 10vh !important; /*Sposta form leggermente sopra rispetto al centro*/
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+#home-logo-text {
+    font-size: min(12vw, 128px);
+}
+
+#home-slogan {
+    font-size: min(3vw, 32px);
+}
+
+#manager-item-page-form {
+    max-width: 800px;
+    margin: auto
+}
+
+#form-login-button {
+    min-width: 5em; /*Evita che il pulsante diventi troppo piccolo per il testo*/
+}
+
+#logout-icon {
+    max-height: 1em;
+    max-width: 1em;
+}
+
+#ticket-statistics-table tbody tr, #ticket-statistics-table tbody td {
+    padding: 0;
+    height: 3em;
+    box-sizing: border-box;
+}
+
+#ticket-buy-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+    height:100%;
+}
+
+#performance-main-picture {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    object-fit: scale-down;
+    border-radius: 2em;
+}
+
+#performance-page-main-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: calc(300px + 40em + 10px);
+}
+
+#performance-page-h{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3em;
+    flex-wrap: wrap;
+}
+
+#performance-page-description {
+    max-width: 40em;
+}
+
+#performance-page-draft-warning {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    z-index: 1;
+    left: 0;
+}
+
+#popup-messages-container {
+    position: fixed !important;
+    margin-bottom: 0 !important;
+    bottom: 3px;
+    left: 3px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: start;
+    z-index: 1; /*Altrimenti il carosello prende precedenza*/
+}
+
+/*Centra verticalmente le righe delle tabelle di BS*/
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

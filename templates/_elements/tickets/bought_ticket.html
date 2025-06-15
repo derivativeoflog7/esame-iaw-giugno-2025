@@ -1,0 +1,9 @@
+{% extends "_elements/tickets/_base_ticket.html" %}
+
+{% block ticket_body_content %}
+    <section class="text-center">
+        {# Questa stringa la considero sicura dato che è definita a livello di codice #}
+        {{ "<br>".join(list(day_names.values())[first_day:first_day + ticket.duration]) | safe}}
+    </section>
+{% endblock %}
+{% block extra_class %}ms-auto me-auto{% endblock %}

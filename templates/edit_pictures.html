@@ -1,0 +1,36 @@
+{% extends '_template_pages/manager_form_page.html' %}
+
+{% block title %}Modifica immagini{% endblock %}
+{% block action_target %}/gestione/es_modifica_immagini{% endblock %}
+{% block button_text %}Aggiorna{% endblock %}
+{% block inputs %}
+    <input type="hidden" name="performance-id" value="{{ performance.id }}">
+    <section>
+        <h3>Aggiungi immagini</h3>
+        <div class="mb-3 row">
+            <label for="edit-pictures-form-new-pictures" class="col-sm-3 form-label col-form-label">
+                Aggiungi immagini
+            </label>
+            <div class="col-sm-9">
+                <input type="file" class="form-control" id="edit-pictures-form-new-pictures"
+                    name="new-pictures" accept="image/*" multiple>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h3>Rimuovi immagini</h3>
+        <p class="mb-2">Spunta le immagini da rimuovere (non è possibile rimuovere l'immagine principale o di sfondo)</p>
+        {% for picture in performance.artist.all_pictures.values() %}
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input type="checkbox" id="edit-pictures-form-remove-{{ picture.id }}"
+                           class="mt-0 form-check-input" name="remove" value="{{ picture.id }}"
+                            {% if picture.id in (performance.artist.main_picture.id, performance.artist.background_picture.id) %} disabled="disabled" {% endif %}>
+                </div>
+                <label for="edit-pictures-form-remove-{{ picture.id }}" class="form-control">
+                    {{ picture.filename }}
+                </label>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

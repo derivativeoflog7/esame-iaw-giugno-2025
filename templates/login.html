@@ -1,0 +1,21 @@
+{% extends '_template_pages/form_page.html' %}
+
+{% block title %}Accesso{% endblock %}
+{% block action_target %}es_accesso{% endblock %}
+{% block inputs %}
+    <div class="mb-3 row">
+        <label for="login-form-email" class="col-sm-3 form-label col-form-label">Email</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id=login-form-email"
+            name="email" placeholder="user@example.com" required>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="login-form-password" class="col-sm-3 form-label col-form-label">Password</label>
+        <div class="col-sm-9">
+            <input type="password" class="form-control" id=login-form-password"
+            name="password" required>
+        </div>
+    </div>
+{% endblock %}
+{% block button_text %}Accedi{% endblock %}

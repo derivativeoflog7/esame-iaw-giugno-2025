@@ -1,0 +1,64 @@
+{% extends "_template_pages/base.html" %}
+
+{% block title %}{{ performance.artist.name }}{% endblock %}
+{% block head_extra %}
+    <style>
+        body {
+            background:
+                   linear-gradient(
+                      rgba(0, 0, 0, 0.7),
+                      rgba(0, 0, 0, 0.7)
+                   ),
+                   url({{ url_for("static", filename="uploads/" + performance.artist.background_picture.filename) }});
+            background-position: center;
+            background-size: cover;
+            margin: 0;
+            background-attachment: fixed;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% if not performance.is_published %}
+        <p id="performance-page-draft-warning" class="outlined h4">Performance non pubblicata</p>
+    {% endif %}
+    <section id="performance-page-main-container">
+        <div class="pt-3" id="performance-page-h">
+            <img id="performance-main-picture" src="{{ url_for("static", filename="uploads/" + performance.artist.main_picture.filename) }}" alt="">
+            <article>
+                <h1>{{ performance.artist.name }}</h1>
+                <h5 class="mb-2">{{ day_names[performance.day] }} {{ performance.time_string }}<br>
+                    {{ performance.duration }} minut{{ "o" if performance.duration == 1 else "i" }}<br>
+                    {{ performance.stage.name }}</h5>
+                <p class="mb-0" id="performance-page-description">{{ performance.description | replace('\n', '<br>' | safe) }}</p>
+            </article>
+        </div>
+        {% if performance.artist.other_pictures %}
+            <div id="performance-pictures-carousel-captions" class="carousel slide mb-3" data-bs-theme="light">
+                <div class="carousel-indicators">
+                    {% if len(performance.artist.other_pictures) > 1 %}
+                        {% for p in performance.artist.other_pictures.values() %}
+                            <button type="button" data-bs-target="#performance-pictures-carousel-captions" data-bs-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></button>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="carousel-inner mt-3">
+                    {% for p in performance.artist.other_pictures.values() %}
+                        <div class="carousel-item {{ "active" if loop.index0 == 0 }}">
+                            <img src="{{ url_for("static", filename="uploads/" + p.filename) }}" class="d-block w-100" alt="{{ p }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if len(performance.artist.other_pictures) > 1 %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#performance-pictures-carousel-captions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Precedente</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#performance-pictures-carousel-captions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Successivo</span>
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

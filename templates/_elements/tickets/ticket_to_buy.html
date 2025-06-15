@@ -1,0 +1,91 @@
+{% extends "_elements/tickets/_base_ticket.html" %}
+
+{% block ticket_body_content %}
+    <section>
+        <span class="ticket-price h4">{{ ticket.price_string }}</span>
+        {% if ticket.duration > 1 %}
+            <span class="ticket-discount strikethrough">{{ ticket.base_price_string }}</span>
+        {% endif %}
+    </section>
+    <section>
+        {# Genera testo disponibilità solo se sono presenti giorni con abbastanza giorni consecutivi disponibili #}
+        {% if max(consecutive_days_available.values()) >= ticket.duration %}
+            {# Non entrare nel ciclo per il biglietto che copre tutti i giorni (Full pass) #}
+            {% if ticket.duration != len(day_names) %}
+                <span class="m-auto">Disponibilità:</span>
+                <ul class="ticket-availability-list">
+                    {# Itera giorni #}
+                    {% for i, day in list(day_names.items()) %}
+                        {# Se il giorno ha abbastanza giorni consecutivi disponibili, crea l'opzione #}
+                        {% if consecutive_days_available[i] >= ticket.duration %}
+                            <li>
+                                {# Crea opzione tramite slice e join #}
+                                {{ "-".join(list(day_names.values())[i:i+ticket.duration]) }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {# Genera testo semplice per il Full pass #}
+            {% else %}
+                Disponibile
+            {% endif %}
+        {% else %}
+            <p>Esaurito :(</p>
+        {% endif %}
+    </section>
+{% endblock %}
+{% block ticket_footer_content %}
+    {# Disabilita e non generare data-bs-target se nessun giorno ha abbastanza giorni consecutivi disponibili #}
+    <button class="btn btn-light"
+        {% if max(consecutive_days_available.values()) >= ticket.duration %}
+            data-bs-target="#buy-{{ ticket.css_class }}-modal" data-bs-toggle="modal"
+        {% else %}
+            disabled
+        {% endif %}
+    >
+        Acquista
+    </button>
+{% endblock %}
+
+{% block modal %}
+    {# Genera modal per acquistare solo se sono presenti giorni con abbastanza giorni consecutivi disponibili #}
+    {% if max(consecutive_days_available.values()) >= ticket.duration %}
+        <div class="modal fade" tabindex="-1" id="buy-{{ ticket.css_class }}-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ url_for("do_buy_ticket") }}" method="POST" class="mb-3">
+                        <input type="hidden" name="duration" value="{{ ticket.duration }}">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Acquista {{ ticket.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+                        </div>
+                        <div class="modal-body">
+                            {# Non generare select e primo paragrafo per il Full pass#}
+                            {% if ticket.duration < len(day_names) %}
+                                <p class="mb-3">Seleziona il biglietto da acquistare:</p>
+                                <select name="first-day" class="form-select mb-3" id="buy-double-ticket-first-day-select">
+                                    {# Ciclo pressoché identico a quello della lista #}
+                                    {% for i, day in list(day_names.items()) %}
+                                        {% if consecutive_days_available[i] >= ticket.duration %}
+                                            <option name="first-day" value="{{ i }}">
+                                                {{ "-".join(list(day_names.values())[i:i+ticket.duration]) }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="hidden" name="first-day" value="0">
+                            {% endif %}
+                            <p>Una volta acquistato il biglietto, non sarà possibile effettuare cambi o rimborsi e non sarà
+                                possibile acquistarne altri</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="submit" class="btn btn-primary">Acquista</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

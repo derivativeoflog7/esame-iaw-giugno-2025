@@ -1,0 +1,53 @@
+<header id="navbar" class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-fluid">
+        <a href="{{ url_for("site_root_page") }}" class="navbar-brand flex flex-row align-items-center">
+            <img src="{{ url_for("static", filename="img/logo.svg") }}" alt="sulFoXide logo" srcset="">
+            sulFoXide
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-content">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <a class="nav-link {{ "active" if url_for("performances_list_page") in request.path }}" href="{{ url_for("performances_list_page") }}">Performance</a>
+                </li>
+                {% if current_user.is_organizer %}
+                    <li class="nav-item">
+                       <a class="nav-link {{ "active" if url_for("manager_page") in request.path }}" href="{{ url_for("manager_page") }}">Gestione</a>
+                    </li>
+                {% elif current_user.is_authenticated and not current_user.ticket %}
+                    <li class="nav-item">
+                       <a class="nav-link {{ "active" if url_for("buy_tickets_page") in request.path }}" href="{{ url_for("buy_tickets_page") }}">Acquista biglietto</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if current_user.is_authenticated %}
+                <div>
+                     <ul class="navbar-nav me-auto">
+                         <li class="nav-item">
+                            <a class="nav-link {{ "active" if request.path == url_for("profile_page") }}"  href="{{ url_for("profile_page") }}">{{ current_user.first_name }} {{ current_user.last_name }}</a>
+                         </li>
+                         <li>
+                            <a class="btn btn-primary" href="{{ url_for("do_logout") }}">
+                                <span>
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Logout
+                                </span>
+                            </a>
+                         </li>
+                     </ul>
+                </div>
+            {% else %}
+                <div>
+                    <a class="btn btn-danger" href="{{ url_for("registration_page") }}">
+                        Registrati
+                    </a>
+                    <a class="btn btn-success" href="{{ url_for("login_page") }}">
+                        Accedi
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

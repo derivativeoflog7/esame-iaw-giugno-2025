@@ -1,0 +1,93 @@
+{% extends '_template_pages/manager_form_page.html' %}
+
+{% block title %}Aggiungi performance{% endblock %}
+{% block action_target %}/gestione/es_aggiunta_performance{% endblock %}
+{% block button_text %}Aggiungi{% endblock %}
+{% block main_class %}max-width-50em-center{% endblock %}
+{% block inputs %}
+    <section>
+        <h3>Performance</h3>
+        <div class="mb-3 row">
+            <label for="add-performance-form-day" class="col-sm-3 form-label col-form-label">Giorno</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="add-performance-form-day"
+                    name="day">
+                    {% for val, text in days.items() %}
+                        <option value="{{ val }}" {% if int(form_data.get("day", 0)) == int(val) %}selected="selected"{% endif %} >{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-time" class="col-sm-3 form-label col-form-label">Orario</label>
+            <div class="col-sm-9">
+                <input type="time" class="form-control" id="add-performance-form-time"
+                    name="time" value="{{ form_data.get("time", "") }}" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-duration" class="col-sm-3 form-label col-form-label">Durata (min)</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" id="add-performance-form-duration"
+                    name="duration" min="1" value="{{ form_data.get("duration", "") }}" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-stage" class="col-sm-3 form-label col-form-label">Palco</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="add-performance-form-stage"
+                       name="stage">
+                    {% for stage in stages.values() %}
+                        <option value="{{ stage.id }}" {% if int(form_data.get("stage", -1)) == stage.id %}selected="selected"{% endif %}>{{ stage.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-genre" class="col-sm-3 form-label col-form-label">Genere</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="add-performance-form-genre"
+                    name="genre" value="{{ form_data.get("genre", "") }}" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-description" class="col-sm-3 form-label col-form-label">Descrizione</label>
+            <div class="col-sm-9">
+                <textarea class="form-control height-10em" id="add-performance-form-description"
+                    name="description" required>{{ form_data.get("description", "") }}</textarea>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h3>Artista</h3>
+        <div class="mb-3 row">
+            <label for="add-performance-form-artist-name" class="col-sm-3 form-label col-form-label">Nome</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="add-performance-form-artist-name"
+                    name="artist-name" value="{{ form_data.get("artist-name", "") }}" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-artist-main-picture" class="col-sm-3 form-label col-form-label">Immagine principale</label>
+            <div class="col-sm-9">
+                <input type="file" class="form-control" id="add-performance-form-artist-main-picture"
+                    name="artist-main-picture" accept="image/*" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-artist-background-picture" class="col-sm-3 form-label col-form-label">Immagine sfondo</label>
+            <div class="col-sm-9">
+                <input type="file" class="form-control" id="add-performance-form-artist-background-picture"
+                    name="artist-background-picture" accept="image/*" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="add-performance-form-artist-other-pictures" class="col-sm-3 form-label col-form-label">Altre immagini</label>
+            <div class="col-sm-9">
+                <input type="file" class="form-control" id="add-performance-form-artist-other-pictures"
+                    name="artist-other-pictures" accept="image/*" multiple>
+            </div>
+        </div>
+        <p>Sarà possibile aggiungere e rimuovere immagini e modificarne il ruolo in seguito</p>
+    </section>
+{% endblock %}

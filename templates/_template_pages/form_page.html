@@ -1,0 +1,15 @@
+{% extends "_template_pages/base.html" %}
+{# È necessario impostare altezza 100% per body e html per centrare il form #}
+{% block body_class %}flex flex-column height-100 centered-page-bg{% endblock %}
+{% block html_class %}height-100{% endblock %}
+{% block main_class %}flex flex-column height-100 align-items-center justify-content-center{% endblock %}
+{% block content %}
+    <form class="blur-backdrop" id="form-page-form" action="{% block action_target %}{% endblock %}" method="POST">
+        {% block inputs %}{% endblock %}
+        <div class="text-center"> <!-- div per centrare il bottone -->
+            <button type="submit" id="form-login-button" class="btn btn-primary col-3">
+                {% block button_text %}{% endblock %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

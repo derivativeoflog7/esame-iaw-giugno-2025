@@ -1,0 +1,17 @@
+<div class="ticket card {{ ticket.css_class }} {% block extra_class %}{% endblock %}">
+    <div class="ticket-border top left"></div>
+    <div class="ticket-border top right"></div>
+    <div class="ticket-border bottom left"></div>
+    <div class="ticket-border bottom right"></div>
+    <div class="card-header">
+        <h5>{{ ticket.name }}</h5>
+    </div>
+    <div class="card-body">
+        {% block ticket_body_content %}{% endblock %}
+    </div>
+    <div class="card-footer">
+        {% block ticket_footer_content %}{% endblock %}
+    </div>
+</div>
+
+{% block modal %}{% endblock %}

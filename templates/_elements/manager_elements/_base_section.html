@@ -1,0 +1,20 @@
+<nav class="flex align-items-center">
+    {% block nav_content %}{% endblock %}
+</nav>
+<section class="tab-content mt-2">
+    <section class="table-responsive tab-pane fade show active" id="{% block table_section_id %}{% endblock %}">
+        <table class="table manager-table table-striped table-hover table-sm">
+            <thead>
+            {% block thead_content %}{% endblock %}
+            </thead>
+            <tbody>
+            {% block rows %}{% endblock %}
+            </tbody>
+        </table>
+    </section>
+    <section class="max-width-50em-center tab-pane fade" id="{% block list_section_id %}{% endblock %}">
+        {% block list_content %}{% endblock %}
+    </section>
+</section>
+
+{% block forms %}{% endblock %}

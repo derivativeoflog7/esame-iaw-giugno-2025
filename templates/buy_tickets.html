@@ -1,0 +1,14 @@
+{% extends '_template_pages/base.html' %}
+
+{% block title %}Acquista biglietto{% endblock %}
+{% block main_class %}max-width-50em-center{% endblock %}
+{% block content %}
+    <h1 class="mb-3 ms-2">Acquista biglietti</h1>
+    <section class="max-width-50em-center" id="ticket-buy-container">
+        {% for ticket in tickets_properties.values() %}
+            {% include "_elements/tickets/ticket_to_buy.html" %}
+        {% endfor %}
+    </section>
+
+
+{% endblock %}

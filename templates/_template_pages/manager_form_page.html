@@ -1,0 +1,11 @@
+{% extends "_template_pages/base.html" %}
+{% block content %}
+    <form action="{% block action_target %}{% endblock %}" method="POST" enctype="multipart/form-data">
+        {% block inputs %}{% endblock %}
+        <div class="text-center"> <!-- div per centrare il bottone -->
+            <button type="submit" id="form-login-button" class="btn btn-primary col-3">
+                {% block button_text %}{% endblock %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

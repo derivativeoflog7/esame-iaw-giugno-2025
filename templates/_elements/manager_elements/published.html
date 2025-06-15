@@ -1,0 +1,71 @@
+{% extends '_elements/manager_elements/_base_section.html' %}
+
+{% block thead_content %}
+    <th class="hide-below-md">Giorno</th>
+    <th class="hide-below-md">Ora</th>
+    <th class="hide-below-md">Durata</th>
+    <th class="d-md-none">Orario</th>
+    <th>Palco</th>
+    <th>Artista</th>
+    <th>Genere</th>
+    <th>Descrizione</th>
+    <th><span class="hide-below-md">Immagini</span><span class="d-md-none">Img</span></th>
+    <th>Autore</th>
+    <th></th>
+{% endblock %}
+{% block rows %}
+    {% if published %}
+        {% for perf in published.values() %}
+            <tr>
+                <td class="hide-below-md">{{ day_names[perf.day] }}</td>
+                <td class="hide-below-md">{{ perf.time_string }}</td>
+                <td class="hide-below-md">{{ perf.duration }}</td>
+                <td class="d-md-none">{{ day_names[perf.day] }}<br>{{ perf.time_string }}<br>{{ perf.duration }}min</td>
+                <td>{{ perf.stage.name }}</td>
+                <td>{{ perf.artist.name }}</td>
+                <td>{{ perf.genre }}</td>
+                <td>{{ perf.description | replace('\n', '<br>' | safe) }}</td>
+                <td>{{ perf.artist.pictures_count }}</td>
+                <td>{{ perf.organizer.first_name }} {{ perf.organizer.last_name }}</td>
+                <td class="performance-manager-actions-cell min-width-nowrap">
+                    <a href="{{ url_for("performance_page", performance_id=perf.id) }}" class="btn btn-info btn-sm">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <td class="hide-below-md" colspan="10">Nessun dato</td>
+        <td class="d-md-none" colspan="8">Nessun dato</td>
+    {% endif %}
+{% endblock %}
+{% block list_content %}
+    {% if published %}
+        {% for performance in published.values() %}
+            {% include "_elements/performance_entry.html" %}
+        {% endfor %}
+    {% else %}
+        <p class="h3 text-center">Nessuna performance pubblicata</p>
+    {% endif %}
+{% endblock %}
+{% block nav_content %}
+    <ul class="nav nav-pills ms-auto" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="published-table-tab"
+                    data-bs-toggle="tab" data-bs-target="#published-table-tab-pane"
+                    type="button" role="tab">
+                Tabella
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="published-list-tab" data-bs-toggle="tab"
+                    data-bs-target="#published-list-tab-pane"
+                    type="button" role="tab">
+                Lista
+            </button>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block table_section_id %}published-table-tab-pane{% endblock %}
+{% block list_section_id %}published-list-tab-pane{% endblock %}

@@ -1,0 +1,51 @@
+{% extends '_template_pages/form_page.html' %}
+
+{% block title %}Registrazione{% endblock %}
+{% block action_target %}es_registrazione{% endblock %}
+{% block inputs %}
+    <section>
+        <div class="mb-3 row">
+            <label for="login-form-first-name" class="col-sm-3 form-label col-form-label">Nome</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="login-form-first-name"
+                name="first-name" placeholder="Mario" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="login-form-last-name" class="col-sm-3 form-label col-form-label">Cognome</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="login-form-last-name"
+                name="last-name" placeholder="Rossi" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="login-form-email" class="col-sm-3 form-label col-form-label">Email</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="login-form-email"
+                name="email" placeholder="user@example.com" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="login-form-password" class="col-sm-3 form-label col-form-label">Password</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="login-form-password"
+                name="password" minlength="8" required>
+                <div class="form-text">
+                    Minimo 8 caratteri
+                </div>
+            </div>
+        </div>
+       <div class="mb-3 row">
+            <label for="login-form-otp" class="col-sm-3 form-label col-form-label">OTP</label>
+            <div class="col-sm-9">
+                <input type="otp" class="form-control" id="login-form-otp"
+                name="otp" placeholder="XXX-XXX">
+                <div class="form-text">
+                    Inserisci l'OTP per registrati come organizzatore<br>
+                    Lascia vuoto altrimenti
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block button_text %}Registrati{% endblock %}

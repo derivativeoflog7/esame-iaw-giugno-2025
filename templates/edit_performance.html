@@ -1,0 +1,119 @@
+{% extends '_template_pages/manager_form_page.html' %}
+
+{% block title %}Modifica performance{% endblock %}
+{% block action_target %}/gestione/es_modifica_performance{% endblock %}
+{% block button_text %}Aggiorna{% endblock %}
+{% block inputs %}
+    <input type="hidden" name="performance-id" value="{{ performance.id }}">
+    <section>
+        <h3>Performance</h3>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-day" class="col-sm-3 form-label col-form-label">Giorno</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="edit-performance-form-day"
+                    name="day">
+                    {% for val, text in days.items() %}
+                        <option value="{{ val }}" {{ 'selected="selected"' if int(data.get("day", -1)) == val else '' }}>{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-time" class="col-sm-3 form-label col-form-label">Orario</label>
+            <div class="col-sm-9">
+                <input type="time" class="form-control" id="edit-performance-form-time"
+                    name="time" required value="{{ data.get("time", "") }}">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-duration" class="col-sm-3 form-label col-form-label">Durata (min)</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" id="edit-performance-form-duration"
+                    name="duration" min="1" required value="{{ data.get("duration", "") }}">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-stage" class="col-sm-3 form-label col-form-label">Palco</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="edit-performance-form-stage"
+                       name="stage">
+                    {% for stage in stages.values() %}
+                        <option value="{{ stage.id }}" {{ 'selected="selected"' if int(data.get("stage", -1)) == stage.id else '' }}>{{ stage.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-genre" class="col-sm-3 form-label col-form-label">Genere</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="edit-performance-form-genre"
+                    name="genre" required value="{{ data.get("genre", "") }}">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-description" class="col-sm-3 form-label col-form-label">Descrizione</label>
+            <div class="col-sm-9">
+                <textarea class="form-control height-10em" id="edit-performance-form-description"
+                    name="description" required>{{ data.get("description", "") }}</textarea>
+            </div>
+        </div>
+    </section>
+    <section id="edit-performance-form-artist-section">
+        <h3>Artista</h3>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-artist-name" class="col-sm-3 form-label col-form-label">Nome</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="edit-performance-form-artist-name"
+                    name="artist-name" required value="{{ data.get("artist-name", "") }}">
+            </div>
+        </div>
+        <div id="edit-performance-pictures-carousel-captions" class="carousel slide mb-3" data-bs-theme="light">
+            <div class="carousel-indicators">
+                {% for _ in performance.artist.all_pictures %}
+                    <button type="button" data-bs-target="#edit-performance-pictures-carousel-captions" data-bs-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></button>
+                {% endfor %}
+            </div>
+          <div class="carousel-inner">
+              {% for picture in performance.artist.all_pictures.values() %}
+                  <div class="carousel-item {{ "active" if loop.index0 == 0 }}">
+                      <img src="{{ url_for("static", filename="uploads/" + picture.filename) }}" class="d-block w-100" alt="{{ picture.filename }}">
+                      <div class="carousel-caption">
+                          <p class="outlined">{{ picture.filename }}</p>
+                      </div>
+                  </div>
+              {% endfor %}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#edit-performance-pictures-carousel-captions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" ></span>
+              <span class="visually-hidden">Precedente</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#edit-performance-pictures-carousel-captions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" ></span>
+            <span class="visually-hidden">Successiva</span>
+          </button>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="edit-performance-form-artist-main-picture" class="col-sm-3 form-label col-form-label">Immagine principale</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="edit-performance-form-artist-main-picture"
+                    name="artist-main-picture-id">
+                    {% for picture in performance.artist.all_pictures.values() %}
+                        <option value="{{ picture.id }}" {% if picture.id == int(data.get("artist-main-picture-id", -1)) %} selected="selected" {% endif %}>{{ picture.filename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="edit-performance-form-artist-background-picture" class="col-sm-3 form-label col-form-label">Immagine di sfondo</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="edit-performance-form-artist-background-picture"
+                    name="artist-background-picture-id">
+                    {% for picture in performance.artist.all_pictures.values() %}
+                        <option value="{{ picture.id }}" {% if picture.id == int(data.get("artist-background-picture-id", -1)) %} selected="selected" {% endif %}>{{ picture.filename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </section>
+{% endblock %}
