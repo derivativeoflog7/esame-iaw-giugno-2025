@@ -1,6 +1,6 @@
 # Esame Introduzione alle Applicazioni Web di giugno 2025
 
-**Importante:** non prendere questo file come linee guida assolute per l'esame, non posso sapere se i contenuti del corso o le direttive per la creazione dei progetti sono cambiate da quando ho sostenuto io l'esame, nel dubbio chiedi chiarimenti al professore (che si è sempre dimostrato disponibile per domande o chiarimenti sul gruppo Telegram ufficiale del corso).
+**Importante:** non prendete questo file come linee guida assolute per l'esame, non posso sapere se i contenuti del corso o le direttive per la creazione dei progetti sono cambiate da quando ho sostenuto io l'esame, nel dubbio chiedete chiarimenti al professore (che si è sempre dimostrato disponibile per domande o chiarimenti sul gruppo Telegram ufficiale del corso).
 
 Elaborato per l'esame di Introduzione alle Applicazioni Web di [giugno 2025](https://docs.google.com/document/d/1P5qTU0oU2jlxHHxbXlDaB2t9CdrUOKS0w3HIMpGg9QY/edit?tab=t.0).
 
