@@ -24,7 +24,7 @@ Per gli artisti, era possibile imporre un limite assoluto di una voce nel databa
 ### Note sulle funzionalità
 È necessario creare il database con i comandi contenuti nel file *db_scheme.db* ~~(doveva essere schema ma non ho voglia di rinominarlo)~~ chiamando il file del database *database.db* prima di poter utilizzare il sito. 
 
-È possibile modificare il valore `MAX_TICKETS_PER_DAY` in *modules/values.py* per vedere cosa succede in caso di biglietti esauriti in una giornata (il comportamento in caso di impostazione di un valore superiore al numero di biglietti già venduti o "errato" (0, numeri non interi positivi, tipi non interi, etc.) in una giornata non è stato testato).
+È possibile modificare il valore `MAX_TICKETS_PER_DAY` in *modules/values.py* per vedere cosa succede in caso di biglietti esauriti in una giornata (il comportamento in caso di impostazione di un valore superiore al numero di biglietti già venduti in una giornata, o di un valore "errato"  come 0, numeri non interi positivi, tipi non interi, etc. non è stato testato).
 
 La funzione OTP è stata testata con [Aegis](https://getaegis.app/) (ma qualsiasi applicazione per l'autenticazione a due fattori dovrebbe funzionare), la chiave segreta si trova come `OTP_KEY` in *modules/values.py*.
 
