@@ -10,18 +10,20 @@ Il corso non prevede lezioni su JavaScript, ma era possibile utilizzare (oltre a
 
 Era inoltre possibile utilizzare moduli Python esterni per arricchire le funzionalità, nel mio caso ho utilizzato [PyOTP](https://pypi.org/project/pyotp/) (gli altri tre moduli sono trattati nel corso); inoltre era consigliato anche l'utilizzo di [Pillow](https://pypi.org/project/pillow/) per ridimensionare le immagini al momento del caricamento, ma non l'ho implementato per mancanza di tempo.
 
-Per comodità personale, ho inserito i miei moduli in una sottocartella, e ho implementato l'accesso ai dati nel database tramite classi, cose che però non erano richieste o trattate nel corso (tantomeno vengono trattati ORM).
+Per comodità personale, ho inserito i miei moduli in una sottocartella, e ho implementato l'accesso ai dati nel database tramite classi, cose che però non erano richieste o trattate nel corso (tantomeno vengono trattati ORM); ho anche utilizzato un'organizzazione dei file .py leggermente diversa da quella usata nel corso.
 
 Era anche possibile aggiungere funzionalità extra a piacimento, ma è stato anche sottolineato come sarebbe stato valutato solo quanto richiesto dalla traccia (e, detto sinceramente, dato il tempo necessario per sviluppare il progetto con tutti i requisiti della traccia, che si è rilevata essere più complessa di quanto sembrasse a prima vista, consiglio vivamente di implementare i requisiti prima di arricchire).
 
 Nella release, le immagini utilizzate sono state create o scattate da me.
 
-### Note sulla tranccia
+### Note sulla traccia
 "Ogni partecipante può acquistare un solo tipo di biglietto per edizione" poteva essere interpretato sia come un limite di un biglietto in assoluto per partecipante, sia come limite di una tipologia di biglietto ma con possibilità di acquistarne di più tipi (evitando però sovrapposizioni); io l'ho interpretata come limite di un biglietto in assoluto.
 
 Per gli artisti, era possibile imporre un limite assoluto di una voce nel database per artista, indipendentemente dallo status di pubblicazione, o anche prevedere l'inserimento di bozze multiple per un singolo artista ma consentendo la pubblicazione solamente di una; io l'ho interpretata come limite assoluto di una voce per artista.
 
 ### Note sulle funzionalità
+È necessario creare il database con i comandi contenuti nel file *db_scheme.db* ~~(doveva essere schema ma non ho voglia di rinominarlo)~~ chiamando il file del database *database.db* prima di poter utilizzare il sito. 
+
 È possibile modificare il valore `MAX_TICKETS_PER_DAY` in *modules/values.py* per vedere cosa succede in caso di biglietti esauriti in una giornata (il comportamento in caso di impostazione di un valore superiore al numero di biglietti già venduti o "errato" (0, numeri non interi positivi, tipi non interi, etc.) in una giornata non è stato testato).
 
 La funzione OTP è stata testata con [Aegis](https://getaegis.app/) (ma qualsiasi applicazione per l'autenticazione a due fattori dovrebbe funzionare), la chiave segreta si trova come `OTP_KEY` in *modules/values.py*.
