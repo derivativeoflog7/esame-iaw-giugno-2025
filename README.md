@@ -1,4 +1,4 @@
-# esame-iaw-giugno-2025
+# Esame Introduzione alle Applicazioni Web di giugno 2025
 
 **Importante:** non prendere questo file come linee guida assolute per l'esame, non posso sapere se i contenuti del corso o le direttive per la creazione dei progetti sono cambiate da quando ho sostenuto io l'esame, nel dubbio chiedi chiarimenti al professore (che si è sempre dimostrato disponibile per domande o chiarimenti sul gruppo Telegram ufficiale del corso).
 
