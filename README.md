@@ -28,4 +28,6 @@ Per gli artisti, era possibile imporre un limite assoluto di una voce nel databa
 
 La funzione OTP è stata testata con [Aegis](https://getaegis.app/) (ma qualsiasi applicazione per l'autenticazione a due fattori dovrebbe funzionare), la chiave segreta si trova come `OTP_KEY` in *modules/values.py*.
 
+Il sito è responsive, e sono state adottate strategie diverse su pagine diverse per varietà (flex-wrap, colonne responsive di Bootstrap, ridimensionamento automatico di alcuni elementi, etc.) 
+
 Come richiesto dalla traccia, i controlli avvengono sia sul frontend (quando possibile puramente con HTML) che sul backend; vi invito quindi a verificare cosa succede nei casi limite (rimozione di parametri *required* o altri vincoli dall'HTML, inserimento forzato di valori non validi nei form, tentativo di modifica/eliminazione di una performance dopo averla pubblicata da un'altra scheda, tentativo di modificare o visualizzare una performance in stato di bozza appartenente a un altro organizzatore, tentativo di acquisto di un biglietto dopo averne comprato già uno da un'altra scheda, etc.).
